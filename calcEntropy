@@ -1,0 +1,26 @@
+#!/bin/bash
+NUM1=""
+NUM2=""
+TEST="F"
+for var in $@
+do
+    if [[ $var == "/" ]]
+      then
+        TEST="T"
+        continue
+    fi
+    if [[ $TEST == "T" ]]
+      then 
+        NUM2="${NUM2} ${var}"
+    fi
+    if [[ $TEST == "F" ]]
+      then
+        NUM1="${NUM1} ${var}"
+    fi
+done
+
+OLDENTROPY="$(./entropy ${NUM1})"
+NEWENTROPY="$(./entropy ${NUM2})"
+INFOGAIN="$(./infoGain ${OLDENTROPY} ${NEWENTROPY})"
+echo "Entropy: ${NEWENTROPY}"
+echo "Information Gain: ${INFOGAIN}"
